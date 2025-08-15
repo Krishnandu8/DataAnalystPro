@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+google-generativeai
+aiofiles
+python-multipart
+black
