@@ -10,7 +10,7 @@ if not api_key:
 
 genai.configure(api_key=api_key)
 
-MODEL_NAME = "gemini-1.5-pro"
+MODEL_NAME = "gemini-2.5-pro"
 
 # Give response in JSON format
 generation_config = genai.types.GenerationConfig(
@@ -124,6 +124,12 @@ async def answer_with_data(question_text=None, session_id="default_answer", retr
     """
     # Reading metadata file
     metadata_path = os.path.join(folder, "metadata.txt")
+    if not os.path.exists(metadata_path):
+        raise FileNotFoundError(
+            f"The required metadata file was not found at {metadata_path}. "
+            "The previous code execution likely failed to create it."
+        )
+
     with open(metadata_path, "r") as file:
         metadata = file.read()
 

@@ -25,6 +25,15 @@ async def run_python_code(code: str, libraries: List[str], folder: str = "upload
         exec_globals = {}
         exec(code, exec_globals)
 
+    # Step 0: Ensure pip is installed in the current environment
+    try:
+        subprocess.check_call([sys.executable, "-m", "ensurepip"])
+    except Exception as e:
+        error_message = f"❌ Failed to ensure pip is installed:\n{e}"
+        log_to_file(error_message)
+        return {"code": 0, "output": error_message}
+
+
     # Step 1: Install all required libraries first
     for lib in libraries:
         try:
